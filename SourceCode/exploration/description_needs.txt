@@ -1,0 +1,11 @@
+
+
+
+Here we need :
+- to know which metrics are insteresting four our study case, which aren't and why
+- to know the correlation between those metrics
+- to establish hypothesis about links table1 and table2
+
+How to do it ? (you speak in french)
+
+
