@@ -21,4 +21,6 @@ print("#########################################################################
 print("Affichage des points communs entre la liste des démissionnaires (table 1):")
 cp = ef.common_points_advanced('../data/table1.csv')
 print(cp)
+# appel de la fonction qui créera les plots/sorties permettant de visualiser les données pertinentes
+ef.common_points_plot(cp)
 print("#####################################################################################################################")

@@ -144,9 +144,6 @@ def common_points_advanced(dataname):
     for column in demissionnaires.columns:
         frequency_df[column] = demissionnaires[column].value_counts()
 
-    # appel de la fonction qui créera les plots permettant de visualiser les données pertinentes
-    common_points_plot(frequency_df)
-
     # return le dataframe contenant les fréquences des valeurs pour chaque colonne
     return frequency_df
 
@@ -155,6 +152,20 @@ def common_points_advanced(dataname):
 
 def common_points_plot(frequency_df):
 
-    # mettre dans des fichiers txt les sorties des fréquences pour chaque colonne = un fichier txt différennt
+    # mettre dans des fichiers txt les sorties des fréquences pour chaque colonne = un fichier txt différent
     for column in frequency_df:
         frequency_df[column].to_csv(f'../../Analyse/Mesures_frequences_valeurs/{column}_frequency.txt')
+    
+    # Créer un plot pour chaque colonne permettant de visualiser la distribution des valeurs
+    for column in frequency_df:
+        plt.figure(figsize=(10, 6))
+        frequency_df[column].plot(kind='bar')
+        plt.title(f'Distribution des valeurs pour la colonne {column}')
+        plt.xlabel('Valeurs')
+        plt.ylabel('Fréquence')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.savefig(f'../../Analyse/Plots_frequences_valeurs/{column}_frequency_plot.png')
+        plt.close()
+    
+
