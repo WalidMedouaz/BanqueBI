@@ -108,6 +108,8 @@ def compare_exploration_results(results1, results2):
 
     return comparison_results
 
+
+# Fonction pour afficher les valeurs les plus fréquentes pour les clients démissionnaires
 def common_points_resignation(dataname):
     # Lire les données de table1.csv
     data = pd.read_csv(dataname)
@@ -127,7 +129,7 @@ def common_points_resignation(dataname):
     # Afficher le résultat
     return result
 
-
+# Fonction pour afficher les valeurs les plus fréquentes pour les clients démissionnaires
 def common_points_advanced(dataname):
     # Lire les données de table1.csv
     data = pd.read_csv(dataname)
@@ -149,7 +151,7 @@ def common_points_advanced(dataname):
 
 
 
-
+# Fonction pour créer des plots et des fichiers txt pour les fréquences des valeurs
 def common_points_plot(frequency_df):
 
     # mettre dans des fichiers txt les sorties des fréquences pour chaque colonne = un fichier txt différent
@@ -168,4 +170,39 @@ def common_points_plot(frequency_df):
         plt.savefig(f'../../Analyse/Plots_frequences_valeurs/{column}_frequency_plot.png')
         plt.close()
     
+
+
+def data_distribution(dataname):
+    # Lire les données de table1.csv
+    data = pd.read_csv(dataname)
+    
+    # Supprimer les colonnes si elles ne sont pas pertinentes pour l'analyse
+    data.drop(columns=['ID'], inplace=True)
+    data.drop(columns=['CDDEM'], inplace=True)
+    data.drop(columns=['AGEAD'], inplace=True)
+    data.drop(columns=['AGEDEM'], inplace=True)
+    data.drop(columns=['CDSEXE'], inplace=True)
+
+    # mettre la colonne DTADH au format float en ne gardant que la partie année (on supprime donc les 6 premiers charactères pour ne prendre que les 4 dernier soit la data)
+    data['DTADH'] = data['DTADH'].str[6:]
+    data['DTADH'] = data['DTADH'].astype(float)
+
+    # Ajouter des statistiques supplémentaires
+    data['MOYANNEE'] = data['ANNEEDEM'].round(0)-data['DTADH'].round(0)
+
+    # Sélectionner les colonnes numériques
+    numeric_columns = data.select_dtypes(include=['int64', 'float64']).columns
+
+    # Calculer les statistiques descriptives pour chaque colonne numérique
+    numeric_stats = data[numeric_columns].describe()
+
+    # Arrondir les valeurs à 2 chiffres après la virgule
+    numeric_stats_rounded = numeric_stats.round(2)
+
+    #Arrondire les valeurs à 0 chiffres après la virgule pour les colonnes DTADH et ANNEEDEM
+    numeric_stats_rounded['DTADH'] = numeric_stats_rounded['DTADH'].round(0)
+    numeric_stats_rounded['ANNEEDEM'] = numeric_stats_rounded['ANNEEDEM'].round(0)
+
+    # Retourner les statistiques descriptives arrondies
+    return numeric_stats_rounded
 
