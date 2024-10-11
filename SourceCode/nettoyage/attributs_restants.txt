@@ -1,0 +1,44 @@
+
+# A garder :
+TABLE 1
+CDSEXE
+MTREV
+NBENF
+CDSITFAM
+DTADH
+CDTMT
+DTDEM
+(CDMOTDEM)
+CDCATCL
+AGEAD
+
+
+TABLE 2
+CDSEXE
+DTNAIS
+MTREV
+NBENF
+DCSITFAM
+DTADH
+CDTMT
+(CDMOTDEM)
+CDATCL
+DTDEM
+
+
+# A enlever dans les deux tables : 
+ID
+CDDEM
+ANNEEDEM
+RANGAGEAD
+AGEDEM
+RANGAGEDEM
+RANGDEM
+ADH
+RANGADH
+BPADH
+
+
+# A ajouter/modifier : 
+- table2 : modifier la colonne CDMOTDEM  (Mettre Nan pour toutes les valeurs vides, soit les non-démissionnaires de la table 2)
+- table2 : ajouter la colonne AGE selon le calcul suivant (2007-Année de DTNAIS)
