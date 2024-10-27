@@ -1,37 +1,53 @@
 import pandas as pd
+import numpy as np
 
-# Suppression des colonnes inutiles pour table1
-file1_path = '../../donnees_banque/table1.csv'
-cleaned_file1_path = '../../donnees_banque/apres_fusion/table1.csv'
+# Définition des chemins (fichiers en entrée)
+file1_path = '../data_after_cleaning/table1_cleaned.csv'
+file2_path = '../data_after_cleaning/table2_cleaned.csv'
 
-columns_to_remove = ['ID', 'ANNEEDEM', 'AGEDEM', 'ADH', 'RANGAGEAD', 'RANGAGEDEM', 'RANGADH', 'RANGDEM']
+# Définition des chemins (fichiers en sortie)
+outer_join_file_path = '../data_after_merging/table_merged.csv'
+outer_join_file_path_no_duplicates = '../data_after_merging/table_merged_no_duplicates.csv'
 
-table1 = pd.read_csv(file1_path)
+def merge_and_replace():
 
-table1_cleaned = table1.drop(columns=columns_to_remove)
+    # Chargement des tables
+    table1 = pd.read_csv(file1_path)
+    table2 = pd.read_csv(file2_path)
 
-table1_cleaned.to_csv(cleaned_file1_path, index=False)
+    # Jointure externe complète sur les colonnes spécifiques
+    outer_join_result = pd.merge(
+        table1, table2, how='outer', on=['CDSEXE', 'MTREV', 'NBENF', 'CDSITFAM', 'DTADH', 'CDTMT', 'CDCATCL', 'DTDEM', 'CDMOTDEM']
+    )
 
-# Suppression des colonnes inutiles pour table2
-file2_path = '../../donnees_banque/table2.csv'
-cleaned_file2_path = '../../donnees_banque/apres_fusion/table2.csv'
+    # Remplacement des valeurs absurdes (date et âge par défaut) par NaN
+    outer_join_result['DTNAIS'] = outer_join_result['DTNAIS'].replace("1900-01-00", "NaN")
+    outer_join_result.loc[outer_join_result['AGE'] == 107, 'AGE'] = "NaN"
 
-columns_to_remove = ['BPADH']
+    # Sauvegarde des modifications dans un fichier CSV après l'outer join
+    outer_join_result.to_csv(outer_join_file_path, index=False)
+    return outer_join_result
 
-table2 = pd.read_csv(file2_path)
+def check_duplicates(outer_join_result):
 
-table2_cleaned = table2.drop(columns=columns_to_remove)
+    # Vérification des doublons après la jointure
+    duplicates = outer_join_result[outer_join_result.duplicated(keep=False)]
 
-table2_cleaned.to_csv(cleaned_file2_path, index=False)
+    # Nombre de doublons
+    nb_doublons = len(duplicates)
+    print("Nombre de doublons :", nb_doublons)
 
-# Outer Join (Jointure externe complète)
-outer_join_result = pd.merge(table1_cleaned, table2_cleaned, how='outer', on=['CDSEXE', 'MTREV', 'NBENF', 'CDSITFAM', 'DTADH', 'CDTMT', 'CDCATCL', 'DTDEM', 'CDMOTDEM'])
+    # Affichage des doublons
+    print(duplicates)
 
-# Left Join (Jointure gauche)
-left_join_result = pd.merge(table1_cleaned, table2_cleaned, how='left', on=['CDSEXE', 'MTREV', 'NBENF', 'CDSITFAM', 'DTADH', 'CDTMT', 'CDCATCL', 'DTDEM', 'CDMOTDEM'])
+def delete_duplicates(outer_join_result):
 
-outer_join_file_path = '../../donnees_banque/apres_fusion/outer_join_result.csv'
-left_join_file_path = '../../donnees_banque/apres_fusion/left_join_result.csv'
+    # Suppression des doublons à partir du résultat de l'outer join
+    outer_join_result_no_duplicates = outer_join_result.drop_duplicates()
 
-outer_join_result.to_csv(outer_join_file_path, index=False)
-left_join_result.to_csv(left_join_file_path, index=False)
+    # Vérification du nombre de lignes avant et après suppression des duplicates
+    print("Nombre de lignes avant suppression des duplicates :", len(outer_join_result))
+    print("Nombre de lignes après suppression des duplicates :", len(outer_join_result_no_duplicates))
+
+    # Sauvegarde de la fusion finale sans doublons
+    outer_join_result_no_duplicates.to_csv(outer_join_file_path_no_duplicates, index=False)
