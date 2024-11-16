@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 
 import kNN_functions as kf
 import SVM_functions as sF
+import Bayes_functions as bF
+import Random_Forest_functions as rF
 
 
 # Charger les données prétraitées
@@ -46,6 +48,21 @@ print(f"Précision moyenne: {np.mean(accuracies):.2f}")
 
 print("###################################################################") # ----------------------------------------------------------------- # 
 # Bayes
+
+print("Début de bayes ...")
+
+# Obtenir la précision pour Naive Bayes
+bayes_accuracy = bF.bayes_prediction(X_train, X_test, y_train, y_test)
+
+# Générer un plot pour la précision
+plt.figure(figsize=(6, 4))
+plt.bar(['Naive Bayes'], [bayes_accuracy], color='orange')
+plt.xlabel('Modèle')
+plt.ylabel('Précision')
+plt.title('Précision du modèle Naive Bayes')
+plt.savefig("../../Analyse/plot_predictions/Bayes/bayes_accuracy.png")
+plt.close()
+
 print("###################################################################") # ----------------------------------------------------------------- # 
 # SVM
 # Modèle : Plutot lent et pas optimisé pour les grands jeux de données
@@ -77,9 +94,30 @@ plt.ylabel('Précision')
 plt.title('Précision du modèle SVM pour différents noyaux')
 plt.grid(True)
 plt.savefig("../../Analyse/plot_predictions/SVM/svm_accuracy_per_kernel.png")
-plt.show()
+#plt.show()
 
 
 print("###################################################################") # ----------------------------------------------------------------- # 
-# Tree
+# Random Forest
+
+# Tester le modèle Random Forest avec différents nombres d'arbres (estimators)
+n_estimators_list = [20, 40, 60, 80, 100, 120, 140, 160]
+rf_accuracies = []
+
+for n_estimators in n_estimators_list:
+    acc = rF.random_forest_prediction(X_train, X_test, y_train, y_test, n_estimators)
+    rf_accuracies.append(acc)
+
+# Plot de la précision en fonction du nombre d'estimateurs
+plt.figure(figsize=(8, 6))
+plt.plot(n_estimators_list, rf_accuracies, marker='o', linestyle='-', color='green')
+plt.xlabel('Nombre d\'arbres (n_estimators)')
+plt.ylabel('Précision')
+plt.title('Précision du modèle Random Forest')
+plt.grid(True)
+plt.savefig("../../Analyse/plot_predictions/Random_Forest/random_forest_accuracy.png")
+plt.close()
+
+print(f"Meilleure précision obtenue : {max(rf_accuracies):.2f} avec {n_estimators_list[rf_accuracies.index(max(rf_accuracies))]} arbres.")
+
 print("###################################################################") # ----------------------------------------------------------------- # 
