@@ -1,0 +1,9 @@
+
+## Steps à faire
+[EC] main
+[V] exploration
+[EC] nettoyage
+[X] fusion
+[X] recodage
+[X] pretraitement
+[X] prediction

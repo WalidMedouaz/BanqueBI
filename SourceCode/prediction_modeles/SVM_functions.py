@@ -23,7 +23,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 
 def svm_prediction(X_train, X_test, y_train, y_test, kernel='linear'):
     print(f"Début de SVM avec noyau={kernel}...")
-    svm = SVC(kernel=kernel, max_iter=1000)  # Limiter à 1000 itérations
+    svm = SVC(kernel=kernel)
     svm.fit(X_train, y_train)
     print("Entraînement terminé.")
 

@@ -67,19 +67,19 @@ print("###################################################################") # -
 # SVM
 # Modèle : Plutot lent et pas optimisé pour les grands jeux de données
 # Définition d'une liste de noyaux pour tester différents modèles SVM
-kernels = ['linear', 'rbf', 'poly', 'sigmoid']  # On peut ajouter d'autres noyaux si besoin :
-#                             ['linear', 'poly', 'rbf', 'sigmoid']
+kernels = ['rbf', 'poly', 'sigmoid']  # On peut ajouter d'autres noyaux si besoin : ['linear', 'poly', 'rbf', 'sigmoid']
+#                             
 
 # Mettre en commentaire ça si tu veux test sur le jeu de données initial (prend plus de temps, modifie sur les inputs en bas (enlever le small))
-X_train_small = X_train.sample(frac=0.1, random_state=42)  # 10% des données
-y_train_small = y_train[:len(X_train_small)]
+# X_train_small = X_train.sample(frac=0.1, random_state=42)  # 10% des données
+# y_train_small = y_train[:len(X_train_small)]
 
 svm_accuracies = []
 
 # Boucle pour tester chaque noyau
 for kernel in kernels:
     # Appel de la fonction svm_prediction et obtenir la précision pour chaque noyau
-    acc = sF.svm_prediction(X_train_small, X_test, y_train_small, y_test, kernel)
+    acc = sF.svm_prediction(X_train, X_test, y_train, y_test, kernel)
     # Ajout de la précision obtenue à la liste des précisions
     svm_accuracies.append(acc)
 
