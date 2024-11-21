@@ -80,6 +80,12 @@ def remove_aberrant_data2(data):
     # Si la date dans DTNAIS est 0000-00-00, supprimer la ligne
     data = data[data['DTNAIS'] != '0000-00-00']
 
+    #print("Taille avant : ", data.shape[0])
+
+    data = data[~((data['DTDEM'] == '31/12/1900') & (data['CDMOTDEM'] != 'ND'))]
+
+    #print("Taille après : ", data.shape[0])
+
     # Si DTDEM égale à 31/12/1900 mettre la valeur à NaN
     data.loc[data['DTDEM'] == '31/12/1900', 'DTDEM'] = np.nan
 
