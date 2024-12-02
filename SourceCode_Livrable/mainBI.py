@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 
-
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
@@ -10,6 +9,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import matplotlib.pyplot as plt
+
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import os
 
 ## ------------------------------------------------------------------- IMPORT FILES ------------------------------------------------------------------ ##
 import functions_step.exploration_functions as ef
@@ -275,3 +279,6 @@ plt.close()
 
 
 ## -------------------------------------------------------------------- DASHBOARD -------------------------------------------------------------------- ##
+
+# lancer le fichier app.py grâce à OS
+os.system('streamlit run ./application/app.py')

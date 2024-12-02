@@ -10,7 +10,7 @@ st.set_page_config(page_title="Analyse Bancaire & Performance IA", layout="wide"
 st.markdown("<h1 style='text-align: center;'>📊 Analyse des Données Bancaires & Performances des Modèles IA</h1>", unsafe_allow_html=True)
 
 # Chargement des données fusionnées
-csv_file_path = 'table_merged_no_duplicates.csv'
+csv_file_path = 'data/data_after_merging/table_merged_no_duplicates.csv'
 if os.path.exists(csv_file_path):
     data = pd.read_csv(csv_file_path)
 
@@ -68,7 +68,7 @@ if os.path.exists(csv_file_path):
     # Section spéciale : Graphiques de performance des modèles IA
     st.subheader("🤖 Performances des Modèles IA")
 
-    graph_files = [f'plot_predictions/performance_model_{i}.png' for i in range(1, 5)]
+    graph_files = [f'fig/plot_predictions/performance_model_{i}.png' for i in range(1, 5)]
     for graph_file in graph_files:
         if os.path.exists(graph_file):
             st.image(graph_file, caption=f"Performance : {graph_file}", use_column_width=True)
