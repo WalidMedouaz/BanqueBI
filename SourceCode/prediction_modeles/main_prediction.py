@@ -67,7 +67,7 @@ print("###################################################################") # -
 # SVM
 # Modèle : Plutot lent et pas optimisé pour les grands jeux de données
 # Définition d'une liste de noyaux pour tester différents modèles SVM
-kernels = ['rbf', 'poly', 'sigmoid']  # On peut ajouter d'autres noyaux si besoin : ['linear', 'poly', 'rbf', 'sigmoid']
+kernels = ['poly', 'rbf', 'sigmoid']  # On peut ajouter d'autres noyaux si besoin : ['linear', 'poly', 'rbf', 'sigmoid']
 #                             
 
 # Mettre en commentaire ça si tu veux test sur le jeu de données initial (prend plus de temps, modifie sur les inputs en bas (enlever le small))
@@ -82,6 +82,7 @@ for kernel in kernels:
     acc = sF.svm_prediction(X_train, X_test, y_train, y_test, kernel)
     # Ajout de la précision obtenue à la liste des précisions
     svm_accuracies.append(acc)
+svm_accuracies.add(sF.linearsvm_prediction(X_train, X_test, y_train, y_test))
 
 # Affichage de la précision moyenne pour les différents noyaux SVM testés
 print(f"Précision moyenne pour SVM: {np.mean(svm_accuracies):.2f}")
