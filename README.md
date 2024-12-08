@@ -52,6 +52,7 @@ python mainBI.py
 En ce qui concerne la manière dont il faut exécuter le script, nous avons un fichier `main` dans chaque dossier de notre architecture.
 
 Cela nous permet de séparer les différentes étapes d'implémentation pour que chacun puisse travailler sur ses propres fonctionnalités. Cela nous permet aussi de faciliter les tests ou encore de faciliter l'identification et la résolution de bugs.
+
 ## Auteurs
 
 - [@RechidiAbdelghani](https://github.com/abdelghanirechidi)
